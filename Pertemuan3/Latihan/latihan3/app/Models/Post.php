@@ -16,9 +16,7 @@ class Post extends Model
     }
 
     use HasFactory;
-
     protected $guarded = ['id'];
-
     protected $with = ['author', 'category'];  
 
     public function author(): BelongsTo
@@ -26,9 +24,21 @@ class Post extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function category(): BelongsTo
+    public function category()
     {
-        return $this->belongsTo(Category::class, 'category_id');
+        return $this->belongsTo(Category::class);
+    }
+
+    //relas belongsto untuk user
+    public function authors()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    //tetap ada
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
     
     public function scopeFilter(Builder $query, array $filters): void

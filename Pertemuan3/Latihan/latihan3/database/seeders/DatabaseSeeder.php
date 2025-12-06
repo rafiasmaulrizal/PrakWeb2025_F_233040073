@@ -12,22 +12,21 @@ class DatabaseSeeder extends Seeder
 {
     use WithoutModelEvents;
 
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
-        for ($i = 1; $i <=5; $i++) {
+        for ($i = 1; $i <= 5; $i++) {
             User::create([
-                'name' => 'User '.$i,
-                'username' => 'user'.$i,
-                'email' => 'user'.$i.'@toba.com',
+                'name' => 'User ' . $i,
+                'username' => 'user' . $i,
+                'email' => 'user' . $i . '@example.com',
                 'password' => bcrypt('password'),
             ]);
         }
 
-        Category::factory(2)->create();
+        // Membuat 2 Category secara otomatis
+        Category::factory()->count(2)->create();
 
+        // Membuat Post secara otomatis
         Post::factory(10)->recycle(User::all())->recycle(Category::all())->create();
     }
 }
