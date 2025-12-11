@@ -1,7 +1,7 @@
 {{-- Header with Search and Add Post Button --}}
 <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center gap-4 bg-gradient-to-r from-blue-50 to-indigo-50">
 
-    <form method="GET" action="{{ route('dashboard.index') }}" class="flex-1 max-w-md">
+    <form method="GET" action="{{ route('dashboard.posts.index') }}" class="flex-1 max-w-md">
         <label for="search" class="sr-only">Search</label>
         <div class="relative">
             <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
@@ -15,7 +15,7 @@
         </div>
     </form>
 
-    <a href="{{ route('dashboard.create') }}"
+    <a href="{{ route('dashboard.posts.create') }}"
         class="inline-flex items-center center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg shadow-sm transition-colors duration-200 whitespace-nowrap">
         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
@@ -30,6 +30,9 @@
             <tr>
                 <th scope="col" class="px-6 py-3 font-medium">
                     No
+                </th>
+                <th scope="col" class="px-6 py-3 font-medium">
+                    Image
                 </th>
                 <th scope="col" class="px-6 py-3 font-medium">
                     Title
@@ -52,6 +55,13 @@
                     {{ $posts->firstItem() + $loop->index }}
                 </th>
                 <td class="px-6 py-4">
+                    @if($post->image)
+                        <img src="{{ asset('storage/' . $post->image) }}" alt="{{ $post->title }}" class="w-16 h-16 rounded-base object-cover">
+                    @else
+                        <img class="w-16 h-16 rounded-base object-cover border border-default bg-gray-100" src="{{ asset('images/preview.svg') }}" alt="No image">
+                    @endif
+                </td>
+                <td class="px-6 py-4">
                     {{ $post->title }}
                 </td>
                 <td class="px-6 py-4">
@@ -60,14 +70,15 @@
                 <td class="px-6 py-4">
                     {{ $post->created_at->format('d M Y') }}
                 </td>
-                <td class="px-6 py-4">
-                    <a href="{{ route ('dashboard.show', $post->slug) }}" class="font-medium text-fg-brand hover:underline">Edit</a>
+                <td class="px-6 py-4 space-x-4">
+                    <a href="{{ route('dashboard.posts.show', $post->slug) }}" class="font-medium text-fg-brand hover:underline">View</a>
+                    <a href="{{ route('dashboard.posts.edit', $post->slug) }}" class="font-medium text-blue-600 hover:underline">Edit</a>
                 </td>
             </tr>
           @empty
             <tr>
-                <td colspan="5" class="px-6 py-12 text-center text-body">
-                    No posts yet. <a href="{{ route('dashboard.create') }}" class="text-fg-brand hover:underline">Create a new post</a>.
+                <td colspan="6" class="px-6 py-12 text-center text-body">
+                    No posts yet. <a href="{{ route('dashboard.posts.create') }}" class="text-fg-brand hover:underline">Create a new post</a>.
                 </td>
             </tr>
           @endforelse

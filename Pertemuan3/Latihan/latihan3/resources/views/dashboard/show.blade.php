@@ -8,13 +8,16 @@
             <h1 class="text-4xl font-bold text-gray-800 mb-4">{{ $post->title }}</h1>
             <div class="flex items-center text-sm text-gray-600 mb-4">
                 <span class="mr-4">By {{ $post->author->name ?? auth()->user()->name }}</span>
-                <span class="mr-4">Category: {{ $post->category ?? 'Uncategorized' }}</span>
+                <span class="mr-4">Category: {{ $post->category->name ?? 'Uncategorized' }}</span>
                 <span>{{ $post->created_at->format('d M Y') }}</span>
             </div>
 
             @if ($post->image)
-            <img src="{{ asset('storage/' . $post->image) }}" alt="{{ $post->title }}"
-                class="w-full h-64 object-cover rounded-lg mb-6">
+                <img src="{{ asset('storage/' . $post->image) }}" alt="{{ $post->title }}"
+                    class="w-full max-h-96 object-cover rounded-lg mb-6 border border-default-medium">
+            @else
+                <img src="{{ asset('images/preview.svg') }}" alt="No image"
+                    class="w-full max-h-96 object-cover rounded-lg mb-6 border border-default-medium bg-gray-100">
             @endif
         </header>
 

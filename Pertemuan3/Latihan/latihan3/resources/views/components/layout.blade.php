@@ -23,6 +23,7 @@
                     <li><a href="/about" class="text-gray-600 hover:text-blue-600">About</a></li>
                     
                     @auth
+                        <li><a href="/dashboard" class="text-gray-600 hover:text-blue-600 font-semibold">Dashboard</a></li>
                         <li class="text-gray-600">{{ Auth::user()->name }}</li>
                         <li>
                             <form action="/logout" method="POST" class="inline">
